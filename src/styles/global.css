@@ -1205,6 +1205,184 @@ h4 {
   color: #8fa4c4;
 }
 
+.footer-legal-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.footer-legal-btn {
+  color: var(--ink-on-dark-muted);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color var(--dur-ui) ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .footer-legal-btn:hover {
+    color: var(--gold-400);
+  }
+}
+
+/* =========================================================
+   Cookie Notice Banner
+   ========================================================= */
+.cookie-banner {
+  position: fixed;
+  left: 1rem;
+  right: 1rem;
+  bottom: 4.9rem;
+  z-index: 95;
+  max-width: 520px;
+  background-color: var(--navy-900);
+  color: var(--ink-on-dark);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.15rem;
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  animation: floatingEnter 360ms var(--ease-out) both;
+}
+
+.cookie-banner-text {
+  font-size: 0.86rem;
+  line-height: 1.55;
+  color: var(--ink-on-dark-muted);
+}
+
+.cookie-inline-link {
+  color: var(--gold-400);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.cookie-banner-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.cookie-accept-btn {
+  padding: 0.58rem 1.15rem;
+  font-size: 0.85rem;
+}
+
+/* =========================================================
+   Privacy & Cookies Modal
+   ========================================================= */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 150;
+  background-color: rgba(6, 24, 54, 0.72);
+  backdrop-filter: blur(4px);
+  display: grid;
+  place-items: center;
+  padding: 1.25rem;
+  animation: fadeOnly 200ms var(--ease-out) both;
+}
+
+.modal-dialog {
+  width: 100%;
+  max-width: 620px;
+  max-height: min(84vh, 680px);
+  background-color: var(--surface-white);
+  color: var(--ink-900);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--surface-border);
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transform-origin: center;
+  animation: modalEnter 240ms var(--ease-out) both;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--surface-border);
+}
+
+.modal-title {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--navy-900);
+}
+
+.modal-close {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  color: var(--ink-500);
+  transition: background-color var(--dur-ui) ease, color var(--dur-ui) ease, transform var(--dur-press) var(--ease-out);
+}
+
+.modal-close:active {
+  transform: scale(0.95);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .modal-close:hover {
+    background-color: var(--surface-soft);
+    color: var(--navy-900);
+  }
+}
+
+.modal-body {
+  padding: 1.35rem 1.5rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  font-size: 0.94rem;
+  color: var(--ink-700);
+  line-height: 1.65;
+}
+
+.modal-body h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--navy-900);
+  margin-top: 0.35rem;
+}
+
+.modal-footer {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid var(--surface-border);
+  display: flex;
+  justify-content: flex-end;
+  background-color: var(--surface-soft);
+}
+
+@keyframes modalEnter {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeOnly {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 /* =========================================================
    Fixed Mobile WhatsApp Button
    ========================================================= */
@@ -1431,6 +1609,15 @@ h4 {
   .floating-whatsapp {
     right: 1.5rem;
     bottom: 1.5rem;
+  }
+
+  .cookie-banner {
+    left: 1.5rem;
+    right: auto;
+    bottom: 1.5rem;
+    flex-direction: row;
+    align-items: center;
+    gap: 1.1rem;
   }
 }
 

@@ -51,9 +51,37 @@ function FiveStars({ size = 16 }) {
   );
 }
 
+const COOKIE_STORAGE_KEY = 'ev_imoveis_cookie_notice_v1';
+
 export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [privacyOpen, setPrivacyOpen] = useState(false);
+  const [showCookieBanner, setShowCookieBanner] = useState(() => {
+    try {
+      return window.localStorage.getItem(COOKIE_STORAGE_KEY) !== 'accepted';
+    } catch {
+      return true;
+    }
+  });
+
+  const acceptCookies = () => {
+    try {
+      window.localStorage.setItem(COOKIE_STORAGE_KEY, 'accepted');
+    } catch {
+      // ignore storage errors in restricted contexts
+    }
+    setShowCookieBanner(false);
+  };
+
+  useEffect(() => {
+    if (!privacyOpen) return;
+    const onKeyDown = (event) => {
+      if (event.key === 'Escape') setPrivacyOpen(false);
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [privacyOpen]);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -664,10 +692,119 @@ export default function App() {
 
           <div className="footer-bottom">
             <p>© {new Date().getFullYear()} {CORRETOR.marca}. Todos os direitos reservados.</p>
-            <p>{CORRETOR.cidade}</p>
+            <div className="footer-legal-links">
+              <button
+                type="button"
+                className="footer-legal-btn"
+                onClick={() => setPrivacyOpen(true)}
+              >
+                Política de Privacidade e Cookies
+              </button>
+              <span aria-hidden="true">·</span>
+              <span>{CORRETOR.cidade}</span>
+            </div>
           </div>
         </div>
       </footer>
+
+      {/* Cookie Notice Banner */}
+      {showCookieBanner && (
+        <aside className="cookie-banner" role="region" aria-label="Aviso de cookies e privacidade">
+          <p className="cookie-banner-text">
+            Utilizamos apenas recursos essenciais de navegação e o mapa incorporado do Google Maps.{' '}
+            <button
+              type="button"
+              className="cookie-inline-link"
+              onClick={() => setPrivacyOpen(true)}
+            >
+              Política de Privacidade e Cookies
+            </button>
+            .
+          </p>
+          <div className="cookie-banner-actions">
+            <button type="button" className="btn btn-gold cookie-accept-btn" onClick={acceptCookies}>
+              Entendi
+            </button>
+          </div>
+        </aside>
+      )}
+
+      {/* Privacy & Cookies Modal */}
+      {privacyOpen && (
+        <div
+          className="modal-backdrop"
+          role="presentation"
+          onClick={(event) => {
+            if (event.target === event.currentTarget) setPrivacyOpen(false);
+          }}
+        >
+          <div
+            className="modal-dialog"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="privacy-modal-title"
+          >
+            <div className="modal-header">
+              <h2 id="privacy-modal-title" className="modal-title">
+                Política de Privacidade e Cookies
+              </h2>
+              <button
+                type="button"
+                className="modal-close"
+                aria-label="Fechar política de privacidade"
+                onClick={() => setPrivacyOpen(false)}
+              >
+                <X size={20} aria-hidden="true" />
+              </button>
+            </div>
+
+            <div className="modal-body">
+              <p>
+                Esta política explica como o site de <strong>{CORRETOR.marca}</strong> trata
+                informações de navegação, em conformidade com a Lei Geral de Proteção de Dados
+                (LGPD — Lei nº 13.709/2018).
+              </p>
+
+              <h3>1. Coleta de dados</h3>
+              <p>
+                Este site tem caráter informativo e de apresentação profissional. Não coletamos
+                dados pessoais automaticamente em formulários internos. O compartilhamento de dados
+                ocorre apenas quando você opta por iniciar contato diretamente pelo WhatsApp,
+                telefone ou Instagram.
+              </p>
+
+              <h3>2. Uso de cookies e serviços de terceiros</h3>
+              <p>
+                Armazenamos apenas uma preferência técnica local no seu navegador para lembrar que
+                você visualizou o aviso de cookies. A seção de localização incorpora o{' '}
+                <strong>Google Maps</strong>, que pode utilizar cookies próprios conforme a política
+                de privacidade do Google.
+              </p>
+
+              <h3>3. Seus direitos e contato</h3>
+              <p>
+                Você pode solicitar esclarecimentos, atualização ou exclusão de informações
+                compartilhadas em atendimento entrando em contato pelo telefone/WhatsApp{' '}
+                <strong className="tabular">{CORRETOR.telefone}</strong> ou presencialmente na{' '}
+                {CORRETOR.endereco}.
+              </p>
+            </div>
+
+            <div className="modal-footer">
+              <button
+                type="button"
+                className="btn btn-navy"
+                onClick={() => {
+                  acceptCookies();
+                  setPrivacyOpen(false);
+                }}
+              >
+                Fechar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Fixed WhatsApp Button */}
       <a
