@@ -122,14 +122,15 @@ h3 {
   font-size: 0.92rem;
   letter-spacing: 0.01em;
   line-height: 1;
-  padding: 1rem 1.7rem;
+  padding: 1.02rem 1.75rem;
   border-radius: var(--radius-xs);
   white-space: nowrap;
   transition:
     transform var(--dur-press) var(--ease-out),
     background-color var(--dur-ui) ease,
     border-color var(--dur-ui) ease,
-    color var(--dur-ui) ease;
+    color var(--dur-ui) ease,
+    box-shadow var(--dur-ui) var(--ease-out);
 }
 
 .btn:active {
@@ -140,12 +141,14 @@ h3 {
   background-color: var(--obsidian-900);
   color: var(--stone-50);
   border: 1px solid var(--obsidian-900);
+  box-shadow: 0 10px 24px rgba(15, 14, 13, 0.14);
 }
 
 .btn-bronze {
   background-color: var(--bronze-400);
   color: var(--obsidian-950);
   border: 1px solid var(--bronze-400);
+  box-shadow: 0 10px 24px rgba(196, 155, 99, 0.22);
 }
 
 .btn-outline-dark {
@@ -154,34 +157,24 @@ h3 {
   border: 1px solid var(--line-light);
 }
 
-.btn-outline-light {
-  background-color: transparent;
-  color: var(--ink-on-dark);
-  border: 1px solid rgba(246, 243, 238, 0.28);
-}
-
 @media (hover: hover) and (pointer: fine) {
   .btn-dark:hover {
     background-color: var(--obsidian-800);
     border-color: var(--obsidian-800);
-    transform: translateY(-1px);
+    transform: translateY(-2px);
+    box-shadow: 0 14px 30px rgba(15, 14, 13, 0.2);
   }
 
   .btn-bronze:hover {
     background-color: #d3ad76;
     border-color: #d3ad76;
-    transform: translateY(-1px);
+    transform: translateY(-2px);
+    box-shadow: 0 14px 30px rgba(196, 155, 99, 0.3);
   }
 
   .btn-outline-dark:hover {
     border-color: var(--obsidian-900);
     background-color: rgba(22, 21, 19, 0.04);
-    transform: translateY(-1px);
-  }
-
-  .btn-outline-light:hover {
-    border-color: var(--bronze-400);
-    color: var(--bronze-400);
     transform: translateY(-1px);
   }
 }
@@ -193,7 +186,7 @@ h3 {
   font-size: 0.9rem;
   font-weight: 600;
   color: var(--obsidian-900);
-  padding-bottom: 3px;
+  padding-bottom: 4px;
   border-bottom: 1px solid var(--bronze-500);
   transition: color var(--dur-ui) ease, border-color var(--dur-ui) ease, gap var(--dur-ui) var(--ease-out);
 }
@@ -207,7 +200,7 @@ h3 {
 }
 
 /* =========================================================
-   Header — Editorial Stone Navigation
+   Header — Editorial Stone Navigation + Progress Hairline
    ========================================================= */
 .site-header {
   position: fixed;
@@ -218,15 +211,26 @@ h3 {
   height: 76px;
   display: flex;
   align-items: center;
-  background-color: rgba(244, 240, 233, 0.88);
+  background-color: rgba(244, 240, 233, 0.9);
   backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--line-light);
   transition: background-color var(--dur-ui) ease, box-shadow var(--dur-ui) ease;
 }
 
 .site-header.is-scrolled {
-  background-color: rgba(244, 240, 233, 0.97);
+  background-color: rgba(244, 240, 233, 0.98);
   box-shadow: 0 8px 28px rgba(15, 14, 13, 0.06);
+}
+
+.scroll-progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  background-color: var(--bronze-500);
+  transform-origin: left;
+  will-change: transform;
 }
 
 .header-inner {
@@ -249,6 +253,7 @@ h3 {
   border-radius: 6px;
   object-fit: contain;
   flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(15, 14, 13, 0.14);
   transition: transform var(--dur-press) var(--ease-out);
 }
 
@@ -271,7 +276,7 @@ h3 {
 .brand-name {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: 1.35rem;
+  font-size: 1.38rem;
   letter-spacing: -0.015em;
   color: var(--obsidian-900);
 }
@@ -288,13 +293,13 @@ h3 {
 .desktop-nav {
   display: none;
   align-items: center;
-  gap: 2rem;
+  gap: 2.1rem;
 }
 
 .nav-link {
-  font-size: 0.84rem;
+  font-size: 0.82rem;
   font-weight: 500;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
   color: var(--ink-700);
   position: relative;
@@ -371,18 +376,34 @@ h3 {
 }
 
 /* =========================================================
-   Hero — Editorial Asymmetric Split on Warm Limestone
+   Hero — Architectural Framed Stage with Layered Portrait
    ========================================================= */
 .hero {
+  position: relative;
   background-color: var(--stone-100);
-  padding-top: calc(76px + clamp(2.75rem, 6vw, 5rem));
-  padding-bottom: clamp(3rem, 6vw, 4.75rem);
+  padding-top: calc(76px + clamp(2.75rem, 6vw, 4.75rem));
+  padding-bottom: clamp(3.5rem, 6.5vw, 5.5rem);
+  overflow: hidden;
+}
+
+.hero-grid-lines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: linear-gradient(
+    to right,
+    rgba(22, 21, 19, 0.04) 1px,
+    transparent 1px
+  );
+  background-size: 25% 100%;
 }
 
 .hero-grid {
+  position: relative;
+  z-index: 1;
   display: grid;
   grid-template-columns: 1fr;
-  gap: clamp(2.25rem, 5vw, 4.5rem);
+  gap: clamp(2.5rem, 5vw, 4.5rem);
   align-items: center;
 }
 
@@ -395,11 +416,11 @@ h3 {
 }
 
 .hero-title {
-  font-size: clamp(2.75rem, 5.6vw, 4.6rem);
+  font-size: clamp(2.85rem, 5.8vw, 4.75rem);
   font-weight: 600;
   color: var(--obsidian-900);
   letter-spacing: -0.025em;
-  line-height: 1.02;
+  line-height: 1.01;
 }
 
 .hero-title em {
@@ -409,31 +430,34 @@ h3 {
 }
 
 .hero-subtitle {
-  font-size: clamp(1rem, 1.35vw, 1.1rem);
+  font-size: clamp(1.02rem, 1.35vw, 1.12rem);
   color: var(--ink-700);
-  max-width: 50ch;
-  line-height: 1.7;
+  max-width: 49ch;
+  line-height: 1.72;
 }
 
 .hero-credentials {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.75rem 1.35rem;
-  padding-top: 0.25rem;
-  font-size: 0.88rem;
+  gap: 0.65rem 1rem;
+  padding: 0.7rem 1rem;
+  background-color: rgba(250, 248, 245, 0.85);
+  border: 1px solid var(--line-light);
+  border-radius: var(--radius-xs);
+  font-size: 0.86rem;
   color: var(--ink-700);
 }
 
 .hero-cred-item {
   display: inline-flex;
   align-items: center;
-  gap: 0.45rem;
+  gap: 0.4rem;
   font-weight: 500;
 }
 
-.hero-cred-star {
-  color: var(--bronze-500);
+.hero-cred-icon {
+  color: var(--bronze-600);
 }
 
 .hero-cred-sep {
@@ -444,22 +468,39 @@ h3 {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 1.25rem;
-  padding-top: 0.5rem;
+  gap: 1.35rem;
+  padding-top: 0.35rem;
 }
 
-.hero-portrait-wrap {
+.hero-portrait-stage {
+  position: relative;
   width: 100%;
-  max-width: 470px;
+  max-width: 460px;
   margin-inline: auto;
+  padding-bottom: 1.5rem;
+}
+
+.hero-portrait-backdrop {
+  position: absolute;
+  top: 16px;
+  right: -14px;
+  bottom: 8px;
+  left: 20px;
+  background-color: var(--stone-200);
+  border: 1px solid var(--stone-300);
+  border-radius: var(--radius-xs);
+  z-index: 0;
 }
 
 .hero-portrait-frame {
+  position: relative;
+  z-index: 1;
   border-radius: var(--radius-xs);
   overflow: hidden;
   aspect-ratio: 4 / 5;
   background-color: var(--stone-200);
   border: 1px solid var(--line-light);
+  box-shadow: var(--shadow-md);
 }
 
 .hero-portrait-img {
@@ -470,14 +511,57 @@ h3 {
   transition: transform 520ms var(--ease-out);
 }
 
+.hero-proof-plaque {
+  position: relative;
+  z-index: 2;
+  margin-top: -2.6rem;
+  margin-left: 1rem;
+  width: fit-content;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0.95rem 1.25rem;
+  background-color: var(--obsidian-900);
+  color: var(--ink-on-dark);
+  border: 1px solid var(--line-dark);
+  border-radius: var(--radius-xs);
+  box-shadow: var(--shadow-lg);
+  transition: transform var(--dur-ui) var(--ease-out), border-color var(--dur-ui) ease;
+}
+
+.hero-proof-score {
+  font-family: var(--font-display);
+  font-size: 2.2rem;
+  font-weight: 600;
+  line-height: 0.95;
+  color: var(--bronze-400);
+}
+
+.hero-proof-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.hero-proof-label {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--ink-on-dark-muted);
+}
+
 @media (hover: hover) and (pointer: fine) {
   .hero-portrait-frame:hover .hero-portrait-img {
     transform: scale(1.025);
   }
+
+  .hero-proof-plaque:hover {
+    transform: translateY(-2px);
+    border-color: var(--bronze-400);
+  }
 }
 
 /* =========================================================
-   Architectural Facts Strip (Hairline grid, zero card box)
+   Architectural Facts Strip
    ========================================================= */
 .facts-band {
   background-color: var(--stone-50);
@@ -505,7 +589,7 @@ h3 {
 
 .fact-value {
   font-family: var(--font-display);
-  font-size: 1.45rem;
+  font-size: 1.55rem;
   font-weight: 600;
   color: var(--obsidian-900);
   line-height: 1.15;
@@ -542,16 +626,16 @@ h3 {
   grid-template-columns: 1fr;
   gap: 1.25rem;
   align-items: end;
-  margin-bottom: clamp(2.5rem, 5vw, 4rem);
+  margin-bottom: clamp(2.5rem, 5vw, 3.75rem);
   padding-bottom: 1.75rem;
   border-bottom: 1px solid var(--line-light);
 }
 
 .section-title {
-  font-size: clamp(2.05rem, 3.8vw, 3.15rem);
+  font-size: clamp(2.15rem, 3.9vw, 3.25rem);
   font-weight: 600;
   color: var(--obsidian-900);
-  line-height: 1.06;
+  line-height: 1.05;
 }
 
 .section-obsidian .section-title {
@@ -561,40 +645,81 @@ h3 {
 .section-lead {
   font-size: 0.98rem;
   color: var(--ink-500);
-  line-height: 1.7;
+  line-height: 1.72;
   max-width: 56ch;
 }
 
 /* =========================================================
-   Services — Architectural Editorial Grid (No boxes, no icon bubbles)
+   Services — Asymmetric 1 + 2 Architectural Showcase
    ========================================================= */
-.services-grid {
+.service-feature {
   display: grid;
   grid-template-columns: 1fr;
-  gap: clamp(2.25rem, 4vw, 2.75rem);
+  background-color: var(--stone-100);
+  border: 1px solid var(--line-light);
+  border-radius: var(--radius-xs);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 1.75rem;
+  transition: box-shadow var(--dur-ui) var(--ease-out), border-color var(--dur-ui) ease;
 }
 
-.service-item {
+.service-feature-media {
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background-color: var(--stone-200);
+}
+
+.service-feature-body {
+  padding: clamp(1.75rem, 4vw, 3rem);
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 1.1rem;
+}
+
+.service-feature-title {
+  font-size: clamp(1.85rem, 3vw, 2.45rem);
+  font-weight: 600;
+  color: var(--obsidian-900);
+}
+
+.services-pair {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.75rem;
+}
+
+.service-panel {
+  background-color: var(--stone-100);
+  border: 1px solid var(--line-light);
+  border-radius: var(--radius-xs);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-sm);
+  transition:
+    transform var(--dur-ui) var(--ease-out),
+    box-shadow var(--dur-ui) var(--ease-out),
+    border-color var(--dur-ui) ease;
 }
 
 .service-media {
   aspect-ratio: 16 / 10;
   overflow: hidden;
-  border-radius: var(--radius-xs);
   background-color: var(--stone-200);
-  margin-bottom: 1.35rem;
 }
 
 .service-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 460ms var(--ease-out);
+  transition: transform 480ms var(--ease-out);
 }
 
 .service-body {
+  padding: clamp(1.5rem, 3vw, 2.15rem);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -602,48 +727,75 @@ h3 {
 }
 
 .service-title {
-  font-size: 1.65rem;
+  font-size: 1.75rem;
   font-weight: 600;
   color: var(--obsidian-900);
-  margin-bottom: 0.65rem;
+  margin-bottom: 0.7rem;
 }
 
 .service-desc {
-  font-size: 0.95rem;
+  font-size: 0.96rem;
   color: var(--ink-700);
-  line-height: 1.68;
-  margin-bottom: 1.25rem;
+  line-height: 1.7;
+  margin-bottom: 1.35rem;
   flex: 1;
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .service-item:hover .service-img {
+  .service-feature:hover {
+    border-color: var(--stone-300);
+    box-shadow: var(--shadow-md);
+  }
+
+  .service-feature:hover .service-img,
+  .service-panel:hover .service-img {
     transform: scale(1.03);
+  }
+
+  .service-panel:hover {
+    transform: translateY(-3px);
+    border-color: var(--stone-300);
+    box-shadow: var(--shadow-md);
   }
 }
 
 /* =========================================================
-   About — Deep Obsidian Editorial Contrast Band
+   About — Deep Obsidian Magazine Spread
    ========================================================= */
 .about-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: clamp(2.5rem, 5vw, 4.75rem);
+  gap: clamp(2.75rem, 5vw, 5rem);
   align-items: center;
 }
 
 .about-media {
+  position: relative;
   max-width: 440px;
   width: 100%;
   margin-inline: auto;
 }
 
+.about-frame-offset {
+  position: absolute;
+  top: -12px;
+  left: -12px;
+  right: 16px;
+  bottom: 16px;
+  border: 1px solid rgba(196, 155, 99, 0.35);
+  border-radius: var(--radius-xs);
+  pointer-events: none;
+}
+
 .about-img-frame {
+  position: relative;
+  z-index: 1;
   border-radius: var(--radius-xs);
   overflow: hidden;
   aspect-ratio: 4 / 5;
   border: 1px solid var(--line-dark);
   background-color: var(--obsidian-800);
+  box-shadow: var(--shadow-lg);
 }
 
 .about-img {
@@ -684,14 +836,14 @@ h3 {
 .differential-item {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 0.25rem;
-  padding-block: 1.15rem;
+  gap: 0.35rem;
+  padding-block: 1.2rem;
   border-bottom: 1px solid var(--line-dark);
 }
 
 .differential-title {
   font-family: var(--font-display);
-  font-size: 1.35rem;
+  font-size: 1.38rem;
   font-weight: 600;
   color: var(--ink-on-dark);
 }
@@ -699,72 +851,104 @@ h3 {
 .differential-desc {
   font-size: 0.9rem;
   color: var(--ink-on-dark-muted);
-  line-height: 1.55;
+  line-height: 1.58;
 }
 
 /* =========================================================
-   Google Reviews — Hairline Editorial Quote Grid
+   Google Reviews — Editorial Proof Plinth + Quote Panels
    ========================================================= */
 .reviews-header-bar {
   display: flex;
   flex-wrap: wrap;
   align-items: flex-end;
   justify-content: space-between;
-  gap: 1.5rem;
-  margin-bottom: clamp(2.5rem, 5vw, 3.75rem);
-  padding-bottom: 1.75rem;
-  border-bottom: 1px solid var(--line-light);
+  gap: 1.75rem;
+  margin-bottom: clamp(2.5rem, 5vw, 3.5rem);
 }
 
-.reviews-rating-summary {
-  display: flex;
+.reviews-plaque {
+  display: inline-flex;
   align-items: center;
-  gap: 1.15rem;
+  gap: 1.25rem;
+  padding: 1.15rem 1.5rem;
+  background-color: var(--obsidian-900);
+  color: var(--ink-on-dark);
+  border-radius: var(--radius-xs);
+  box-shadow: var(--shadow-md);
 }
 
 .reviews-big-score {
   font-family: var(--font-display);
-  font-size: clamp(2.75rem, 4.5vw, 3.6rem);
+  font-size: clamp(2.75rem, 4.2vw, 3.5rem);
   font-weight: 600;
   line-height: 0.95;
-  color: var(--obsidian-900);
+  color: var(--bronze-400);
 }
 
 .stars-row {
   display: inline-flex;
   align-items: center;
   gap: 0.2rem;
-  color: var(--bronze-500);
+  color: var(--bronze-400);
 }
 
 .reviews-count-text {
-  font-size: 0.86rem;
-  color: var(--ink-500);
+  font-size: 0.84rem;
+  color: var(--ink-on-dark-muted);
   margin-top: 0.2rem;
+}
+
+.reviews-maps-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 0.45rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--bronze-400);
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .reviews-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 0;
-  border-top: 1px solid var(--line-light);
+  gap: 1.5rem;
 }
 
-.review-item {
-  padding: clamp(1.75rem, 3vw, 2.5rem) 0;
-  border-bottom: 1px solid var(--line-light);
+.review-panel {
+  position: relative;
+  background-color: var(--stone-50);
+  border: 1px solid var(--line-light);
+  border-radius: var(--radius-xs);
+  padding: clamp(1.75rem, 3vw, 2.35rem);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 1.35rem;
+  gap: 1.4rem;
+  box-shadow: var(--shadow-sm);
+  transition:
+    transform var(--dur-ui) var(--ease-out),
+    box-shadow var(--dur-ui) var(--ease-out),
+    border-color var(--dur-ui) ease;
+}
+
+.review-mark {
+  font-family: var(--font-display);
+  font-size: 3.5rem;
+  line-height: 0.6;
+  color: var(--bronze-400);
+  opacity: 0.55;
+  user-select: none;
 }
 
 .review-quote {
   font-family: var(--font-display);
-  font-size: clamp(1.32rem, 2vw, 1.58rem);
+  font-size: clamp(1.32rem, 1.9vw, 1.55rem);
   font-weight: 500;
   color: var(--obsidian-900);
-  line-height: 1.45;
+  line-height: 1.48;
+  flex: 1;
 }
 
 .review-meta {
@@ -772,31 +956,50 @@ h3 {
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line-light);
 }
 
 .review-author {
-  font-size: 0.84rem;
+  font-size: 0.8rem;
   font-weight: 600;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--ink-700);
 }
 
+.review-panel .stars-row {
+  color: var(--bronze-500);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .review-panel:hover {
+    transform: translateY(-2px);
+    border-color: var(--stone-300);
+    box-shadow: var(--shadow-md);
+  }
+}
+
 /* =========================================================
-   Region & Map — Warm Sand Architectural Split
+   Region & Map — Architectural Dossier
    ========================================================= */
 .region-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: clamp(2rem, 4vw, 3.5rem);
+  gap: 1.75rem;
   align-items: stretch;
 }
 
-.region-info {
+.region-dossier {
+  background-color: var(--stone-50);
+  border: 1px solid var(--line-light);
+  border-radius: var(--radius-xs);
+  padding: clamp(1.75rem, 3.5vw, 2.6rem);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   gap: 2rem;
+  box-shadow: var(--shadow-sm);
 }
 
 .region-details {
@@ -836,14 +1039,15 @@ h3 {
   border-radius: var(--radius-xs);
   overflow: hidden;
   border: 1px solid var(--line-light);
-  min-height: 340px;
+  min-height: 360px;
   background-color: var(--stone-100);
+  box-shadow: var(--shadow-sm);
 }
 
 .map-iframe {
   width: 100%;
   height: 100%;
-  min-height: 340px;
+  min-height: 360px;
   border: 0;
   display: block;
 }
@@ -876,7 +1080,7 @@ h3 {
   cursor: pointer;
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: 1.35rem;
+  font-size: 1.38rem;
   color: var(--obsidian-900);
   transition: color var(--dur-ui) ease, transform var(--dur-press) var(--ease-out);
 }
@@ -903,7 +1107,7 @@ h3 {
   padding-bottom: 1.4rem;
   font-size: 0.95rem;
   color: var(--ink-700);
-  line-height: 1.7;
+  line-height: 1.72;
   max-width: 62ch;
   animation: faqReveal 220ms var(--ease-out) both;
 }
@@ -1419,22 +1623,12 @@ h3 {
     text-align: left;
   }
 
-  .services-grid {
-    grid-template-columns: repeat(3, 1fr);
+  .services-pair {
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .reviews-grid {
     grid-template-columns: repeat(2, 1fr);
-  }
-
-  .review-item {
-    padding: 2.25rem 2.25rem 2.25rem 0;
-    border-right: 1px solid var(--line-light);
-  }
-
-  .review-item:nth-child(2n) {
-    padding: 2.25rem 0 2.25rem 2.25rem;
-    border-right: none;
   }
 
   .region-grid {
@@ -1494,12 +1688,16 @@ h3 {
   }
 
   .hero-grid {
-    grid-template-columns: 1.18fr 0.82fr;
+    grid-template-columns: 1.15fr 0.85fr;
   }
 
-  .hero-portrait-wrap {
+  .hero-portrait-stage {
     margin-inline: 0;
     justify-self: end;
+  }
+
+  .hero-proof-plaque {
+    margin-left: -1.75rem;
   }
 
   .facts-grid {
@@ -1509,16 +1707,11 @@ h3 {
   .fact-cell {
     border-bottom: none;
     border-right: 1px solid var(--line-light);
-    padding: 1.75rem 1.5rem;
+    padding: 1.85rem 1.5rem;
   }
 
   .fact-cell:first-child {
     padding-left: 0;
-  }
-
-  .fact-cell:last-child {
-    border-right: none;
-    padding-right: 0;
   }
 
   .fact-cell:nth-child(2n) {
@@ -1527,11 +1720,21 @@ h3 {
 
   .fact-cell:last-child {
     border-right: none;
+    padding-right: 0;
   }
 
   .section-head-split {
     grid-template-columns: 1.1fr 0.9fr;
     gap: 3rem;
+  }
+
+  .service-feature {
+    grid-template-columns: 1.25fr 0.95fr;
+  }
+
+  .service-feature-media {
+    aspect-ratio: auto;
+    min-height: 360px;
   }
 
   .about-grid {
@@ -1542,7 +1745,18 @@ h3 {
     margin-inline: 0;
   }
 
+  .differential-item {
+    grid-template-columns: 0.9fr 1.1fr;
+    align-items: baseline;
+    gap: 1.5rem;
+  }
+
   .faq-layout {
     grid-template-columns: 0.85fr 1.15fr;
+  }
+
+  .faq-intro {
+    position: sticky;
+    top: 108px;
   }
 }

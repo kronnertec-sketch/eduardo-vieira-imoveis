@@ -45,6 +45,7 @@ function FiveStars({ size = 15 }) {
 export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
   const [privacyOpen, setPrivacyOpen] = useState(false);
   const [showCookieBanner, setShowCookieBanner] = useState(() => {
     try {
@@ -73,7 +74,12 @@ export default function App() {
   }, [privacyOpen]);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    const onScroll = () => {
+      const y = window.scrollY;
+      setScrolled(y > 24);
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      setScrollProgress(max > 0 ? Math.min(1, Math.max(0, y / max)) : 0);
+    };
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
@@ -105,6 +111,7 @@ export default function App() {
   }, []);
 
   const whatsappGeral = montarLinkWhatsApp();
+  const [servicoDestaque, ...servicosSecundarios] = CORRETOR.servicos;
 
   return (
     <>
@@ -141,6 +148,12 @@ export default function App() {
             {menuOpen ? <X size={20} aria-hidden="true" /> : <Menu size={20} aria-hidden="true" />}
           </button>
         </div>
+
+        <span
+          className="scroll-progress"
+          aria-hidden="true"
+          style={{ transform: `scaleX(${scrollProgress})` }}
+        />
       </header>
 
       {menuOpen && (
@@ -169,8 +182,10 @@ export default function App() {
       )}
 
       <main id="conteudo-principal">
-        {/* Editorial Hero on Warm Limestone */}
+        {/* Editorial Hero on Architectural Limestone Stage */}
         <section id="topo" className="hero">
+          <div className="hero-grid-lines" aria-hidden="true" />
+
           <div className="container hero-grid">
             <div className="hero-copy">
               <h1 className="hero-title hero-enter">
@@ -183,12 +198,12 @@ export default function App() {
               </p>
 
               <div className="hero-credentials hero-enter hero-enter-delay-1">
-                <span className="hero-cred-item tabular">
-                  <Star size={15} fill="currentColor" className="hero-cred-star" aria-hidden="true" />
-                  {CORRETOR.google.nota} no Google ({CORRETOR.google.totalAvaliacoes} avaliações)
+                <span className="hero-cred-item">
+                  <MapPin size={15} className="hero-cred-icon" aria-hidden="true" />
+                  {CORRETOR.bairroBase}, {CORRETOR.cidade}
                 </span>
                 <span className="hero-cred-sep" aria-hidden="true">
-                  /
+                  ·
                 </span>
                 <span className="hero-cred-item">CRECI: {CORRETOR.creci}</span>
               </div>
@@ -205,13 +220,14 @@ export default function App() {
                   <ArrowRight size={16} aria-hidden="true" />
                 </a>
                 <a href="#avaliacoes" className="text-action">
-                  Ler avaliações reais
+                  Ver avaliações no Google
                   <ArrowRight size={15} aria-hidden="true" />
                 </a>
               </div>
             </div>
 
-            <div className="hero-portrait-wrap hero-portrait-enter">
+            <div className="hero-portrait-stage hero-portrait-enter">
+              <div className="hero-portrait-backdrop" aria-hidden="true" />
               <div className="hero-portrait-frame">
                 <img
                   src={CORRETOR.imagens.sobreRetrato}
@@ -219,6 +235,16 @@ export default function App() {
                   className="hero-portrait-img"
                 />
               </div>
+
+              <a href="#avaliacoes" className="hero-proof-plaque">
+                <span className="hero-proof-score tabular">{CORRETOR.google.nota}</span>
+                <span className="hero-proof-meta">
+                  <FiveStars size={13} />
+                  <span className="hero-proof-label tabular">
+                    {CORRETOR.google.totalAvaliacoes} avaliações no Google
+                  </span>
+                </span>
+              </a>
             </div>
           </div>
         </section>
@@ -249,7 +275,7 @@ export default function App() {
           </div>
         </section>
 
-        {/* Services — Editorial Architectural Grid */}
+        {/* Services — Asymmetric 1 + 2 Editorial Showcase */}
         <section id="servicos" className="section section-paper">
           <div className="container">
             <div className="section-head-split" data-reveal="up">
@@ -261,13 +287,40 @@ export default function App() {
               </p>
             </div>
 
-            <div className="services-grid">
-              {CORRETOR.servicos.map((servico, index) => (
+            {/* Flagship Horizontal Service */}
+            <article className="service-feature" data-reveal="up">
+              <div className="service-feature-media">
+                <img
+                  src={servicoDestaque.imagem}
+                  alt={servicoDestaque.imagemAlt}
+                  className="service-img"
+                  loading="lazy"
+                />
+              </div>
+              <div className="service-feature-body">
+                <h3 className="service-feature-title">{servicoDestaque.titulo}</h3>
+                <p className="service-desc">{servicoDestaque.descricao}</p>
+                <a
+                  href={montarLinkWhatsApp(servicoDestaque.whatsappTexto)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-dark"
+                >
+                  <MessageCircle size={16} aria-hidden="true" />
+                  Conversar no WhatsApp
+                  <ArrowRight size={15} aria-hidden="true" />
+                </a>
+              </div>
+            </article>
+
+            {/* Secondary 2-Column Editorial Pair */}
+            <div className="services-pair">
+              {servicosSecundarios.map((servico, index) => (
                 <article
                   key={servico.id}
-                  className="service-item"
+                  className="service-panel"
                   data-reveal="up"
-                  data-stagger={index}
+                  data-stagger={index + 1}
                 >
                   <div className="service-media">
                     <img
@@ -296,10 +349,11 @@ export default function App() {
           </div>
         </section>
 
-        {/* About — Deep Obsidian Contrast Band */}
+        {/* About — Deep Obsidian Magazine Spread */}
         <section id="sobre" className="section section-obsidian">
           <div className="container about-grid">
             <div className="about-media" data-reveal="scale">
+              <div className="about-frame-offset" aria-hidden="true" />
               <div className="about-img-frame">
                 <img
                   src={CORRETOR.imagens.heroRetrato}
@@ -347,7 +401,7 @@ export default function App() {
           </div>
         </section>
 
-        {/* Google Reviews — Hairline Editorial Quote Grid */}
+        {/* Google Reviews — Editorial Proof Plinth + Refined Quote Panels */}
         <section id="avaliacoes" className="section">
           <div className="container">
             <div className="reviews-header-bar" data-reveal="up">
@@ -359,7 +413,7 @@ export default function App() {
                 </p>
               </div>
 
-              <div className="reviews-rating-summary">
+              <div className="reviews-plaque">
                 <span className="reviews-big-score tabular">{CORRETOR.google.nota}</span>
                 <div>
                   <FiveStars size={16} />
@@ -370,8 +424,7 @@ export default function App() {
                     href={CORRETOR.googleMapsUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-action"
-                    style={{ marginTop: '0.45rem', fontSize: '0.82rem' }}
+                    className="reviews-maps-link"
                   >
                     Ver no Google Maps
                     <ExternalLink size={13} aria-hidden="true" />
@@ -384,11 +437,14 @@ export default function App() {
               {CORRETOR.depoimentos.map((depoimento, index) => (
                 <article
                   key={depoimento.id}
-                  className="review-item"
+                  className="review-panel"
                   data-reveal="up"
                   data-stagger={index}
                 >
-                  <p className="review-quote">“{depoimento.texto}”</p>
+                  <span className="review-mark" aria-hidden="true">
+                    “
+                  </span>
+                  <p className="review-quote">{depoimento.texto}</p>
                   <div className="review-meta">
                     <span className="review-author">{depoimento.autor}</span>
                     <FiveStars size={14} />
@@ -399,7 +455,7 @@ export default function App() {
           </div>
         </section>
 
-        {/* Region of Operation */}
+        {/* Region of Operation — Architectural Dossier */}
         <section id="regiao" className="section section-sand">
           <div className="container">
             <div className="section-head-split" data-reveal="up">
@@ -411,7 +467,7 @@ export default function App() {
             </div>
 
             <div className="region-grid">
-              <div className="region-info" data-reveal="up">
+              <div className="region-dossier" data-reveal="up">
                 <div className="region-details">
                   <div className="region-detail-row">
                     <MapPin size={18} className="region-icon" aria-hidden="true" />
@@ -443,7 +499,7 @@ export default function App() {
                     href={CORRETOR.googleMapsUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="btn btn-outline-dark"
+                    className="btn btn-dark"
                   >
                     Abrir endereço no Google Maps
                     <ExternalLink size={15} aria-hidden="true" />
@@ -468,7 +524,7 @@ export default function App() {
         {/* FAQ — Editorial Split */}
         <section id="perguntas" className="section section-paper">
           <div className="container faq-layout">
-            <div data-reveal="up">
+            <div className="faq-intro" data-reveal="up">
               <h2 className="section-title">
                 Perguntas frequentes sobre comprar ou vender imóvel em Goiânia
               </h2>
