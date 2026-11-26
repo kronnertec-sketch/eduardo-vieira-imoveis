@@ -62,6 +62,31 @@ export default function App() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  useEffect(() => {
+    const nodes = document.querySelectorAll('[data-reveal]');
+    if (!nodes.length) return;
+
+    if (typeof IntersectionObserver === 'undefined') {
+      nodes.forEach((node) => node.setAttribute('data-visible', 'true'));
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.setAttribute('data-visible', 'true');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.14, rootMargin: '0px 0px -36px 0px' }
+    );
+
+    nodes.forEach((node) => observer.observe(node));
+    return () => observer.disconnect();
+  }, []);
+
   const whatsappGeral = montarLinkWhatsApp();
 
   return (
@@ -177,7 +202,7 @@ export default function App() {
               </div>
             </div>
 
-            <div className="hero-portrait-wrap hero-enter hero-enter-delay-1">
+            <div className="hero-portrait-wrap hero-portrait-enter">
               <div className="hero-portrait-frame">
                 <img
                   src={CORRETOR.imagens.heroRetrato}
@@ -192,7 +217,7 @@ export default function App() {
         {/* Floating Trust Strip */}
         <section className="trust-strip-section" aria-label="Destaques do atendimento">
           <div className="container">
-            <div className="trust-strip">
+            <div className="trust-strip" data-reveal="up">
               <div className="trust-item">
                 <span className="trust-icon trust-icon-gold" aria-hidden="true">
                   <Star size={20} fill="currentColor" />
@@ -241,7 +266,7 @@ export default function App() {
         {/* Services */}
         <section id="servicos" className="section">
           <div className="container">
-            <div className="section-header section-header-center">
+            <div className="section-header section-header-center" data-reveal="up">
               <h2 className="section-title">Serviços de corretagem de imóveis em Goiânia</h2>
               <div className="section-divider" aria-hidden="true" />
               <p className="section-lead">
@@ -252,8 +277,13 @@ export default function App() {
             </div>
 
             <div className="services-grid">
-              {CORRETOR.servicos.map((servico) => (
-                <article key={servico.id} className="service-card">
+              {CORRETOR.servicos.map((servico, index) => (
+                <article
+                  key={servico.id}
+                  className="service-card"
+                  data-reveal="up"
+                  data-stagger={index}
+                >
                   <div className="service-media">
                     <img
                       src={servico.imagem}
@@ -287,7 +317,7 @@ export default function App() {
         {/* About */}
         <section id="sobre" className="section section-soft">
           <div className="container about-grid">
-            <div className="about-media">
+            <div className="about-media" data-reveal="scale">
               <div className="about-img-frame">
                 <img
                   src={CORRETOR.imagens.sobreRetrato}
@@ -298,7 +328,7 @@ export default function App() {
               </div>
             </div>
 
-            <div className="about-content">
+            <div className="about-content" data-reveal="up">
               <div>
                 <h2 className="section-title">{CORRETOR.sobre.titulo}</h2>
                 <div className="section-divider" aria-hidden="true" />
@@ -311,8 +341,13 @@ export default function App() {
               ))}
 
               <ul className="differentials-list">
-                {CORRETOR.diferenciais.map((item) => (
-                  <li key={item.titulo} className="differential-item">
+                {CORRETOR.diferenciais.map((item, index) => (
+                  <li
+                    key={item.titulo}
+                    className="differential-item"
+                    data-reveal="up"
+                    data-stagger={index}
+                  >
                     <CheckCircle2 size={20} className="differential-icon" aria-hidden="true" />
                     <div>
                       <p className="differential-title">{item.titulo}</p>
@@ -338,7 +373,7 @@ export default function App() {
         {/* Testimonials */}
         <section id="avaliacoes" className="section">
           <div className="container">
-            <div className="section-header section-header-center">
+            <div className="section-header section-header-center" data-reveal="up">
               <h2 className="section-title">Avaliações de clientes em Goiânia no Google</h2>
               <div className="section-divider" aria-hidden="true" />
               <p className="section-lead">
@@ -347,7 +382,7 @@ export default function App() {
               </p>
             </div>
 
-            <div className="reviews-summary">
+            <div className="reviews-summary" data-reveal="up">
               <div className="reviews-score-block">
                 <span className="reviews-score tabular">{CORRETOR.google.nota}</span>
                 <div>
@@ -371,8 +406,13 @@ export default function App() {
             </div>
 
             <div className="reviews-grid">
-              {CORRETOR.depoimentos.map((depoimento) => (
-                <article key={depoimento.id} className="review-card">
+              {CORRETOR.depoimentos.map((depoimento, index) => (
+                <article
+                  key={depoimento.id}
+                  className="review-card"
+                  data-reveal="up"
+                  data-stagger={index}
+                >
                   <p className="review-quote">“{depoimento.texto}”</p>
                   <div className="review-footer">
                     <div>
@@ -390,7 +430,7 @@ export default function App() {
         {/* Region of Operation */}
         <section id="regiao" className="section section-soft">
           <div className="container">
-            <div className="section-header">
+            <div className="section-header" data-reveal="up">
               <h2 className="section-title">Atuação em Goiânia, com base no Setor Marista</h2>
               <div className="section-divider" aria-hidden="true" />
               <p className="section-lead">
@@ -400,7 +440,7 @@ export default function App() {
             </div>
 
             <div className="region-grid">
-              <div className="region-card">
+              <div className="region-card" data-reveal="up">
                 <div className="region-details">
                   <div className="region-detail-row">
                     <span className="region-icon" aria-hidden="true">
@@ -444,7 +484,7 @@ export default function App() {
                 </a>
               </div>
 
-              <div className="map-frame">
+              <div className="map-frame" data-reveal="scale">
                 <iframe
                   title="Localização no Setor Marista, Goiânia - GO"
                   src={CORRETOR.googleMapsEmbedUrl}
@@ -461,7 +501,7 @@ export default function App() {
         {/* FAQ (SEO + AI Search) */}
         <section id="perguntas" className="section">
           <div className="container">
-            <div className="section-header section-header-center">
+            <div className="section-header section-header-center" data-reveal="up">
               <h2 className="section-title">
                 Perguntas frequentes sobre comprar ou vender imóvel em Goiânia
               </h2>
@@ -473,8 +513,13 @@ export default function App() {
             </div>
 
             <div className="faq-list">
-              {CORRETOR.faq.map((item) => (
-                <details key={item.pergunta} className="faq-item">
+              {CORRETOR.faq.map((item, index) => (
+                <details
+                  key={item.pergunta}
+                  className="faq-item"
+                  data-reveal="up"
+                  data-stagger={index}
+                >
                   <summary className="faq-question">
                     <span>{item.pergunta}</span>
                     <ChevronDown size={19} className="faq-chevron" aria-hidden="true" />
@@ -489,7 +534,7 @@ export default function App() {
         {/* Signature CTA Banner */}
         <section className="cta-banner-section" aria-label="Chamada para contato">
           <div className="container">
-            <div className="cta-banner">
+            <div className="cta-banner" data-reveal="scale">
               <div className="cta-banner-content">
                 <span className="cta-banner-icon" aria-hidden="true">
                   <Phone size={22} />

@@ -253,6 +253,17 @@ h4 {
   object-fit: contain;
   flex-shrink: 0;
   box-shadow: 0 4px 12px rgba(6, 24, 54, 0.25);
+  transition: transform var(--dur-press) var(--ease-out);
+}
+
+.brand-link:active .brand-logo-img {
+  transform: scale(0.96);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .brand-link:hover .brand-logo-img {
+    transform: scale(1.04);
+  }
 }
 
 .brand-text {
@@ -488,6 +499,13 @@ h4 {
   height: 100%;
   object-fit: cover;
   object-position: center top;
+  transition: transform 480ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hero-portrait-frame:hover .hero-portrait-img {
+    transform: scale(1.025);
+  }
 }
 
 /* =========================================================
@@ -651,6 +669,9 @@ h4 {
   display: grid;
   place-items: center;
   box-shadow: 0 6px 16px rgba(11, 42, 91, 0.22);
+  transition:
+    transform var(--dur-ui) var(--ease-out),
+    background-color var(--dur-ui) ease;
 }
 
 .service-title {
@@ -688,6 +709,11 @@ h4 {
 
   .service-card:hover .service-img {
     transform: scale(1.03);
+  }
+
+  .service-card:hover .service-badge {
+    transform: translateY(-2px);
+    background-color: var(--navy-700);
   }
 
   .service-link:hover {
@@ -760,6 +786,18 @@ h4 {
   background-color: var(--surface-white);
   border: 1px solid var(--surface-border);
   border-radius: var(--radius-sm);
+  transition:
+    transform var(--dur-ui) var(--ease-out),
+    border-color var(--dur-ui) ease,
+    box-shadow var(--dur-ui) var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .differential-item:hover {
+    transform: translateY(-2px);
+    border-color: #cbd7e8;
+    box-shadow: var(--shadow-sm);
+  }
 }
 
 .differential-icon {
@@ -840,6 +878,20 @@ h4 {
   flex-direction: column;
   justify-content: space-between;
   gap: 1.25rem;
+  transition:
+    transform var(--dur-ui) var(--ease-out),
+    border-color var(--dur-ui) ease,
+    box-shadow var(--dur-ui) var(--ease-out),
+    background-color var(--dur-ui) ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .review-card:hover {
+    transform: translateY(-2px);
+    background-color: var(--surface-white);
+    border-color: #cbd7e8;
+    box-shadow: var(--shadow-sm);
+  }
 }
 
 .review-quote {
@@ -982,6 +1034,11 @@ h4 {
   font-weight: 700;
   font-size: 1rem;
   color: var(--navy-900);
+  transition: transform var(--dur-press) var(--ease-out), color var(--dur-ui) ease;
+}
+
+.faq-question:active {
+  transform: scale(0.99);
 }
 
 .faq-question::-webkit-details-marker {
@@ -1003,6 +1060,7 @@ h4 {
   font-size: 0.96rem;
   color: var(--ink-700);
   line-height: 1.65;
+  animation: faqReveal 220ms var(--ease-out) both;
 }
 
 /* =========================================================
@@ -1166,6 +1224,7 @@ h4 {
   padding: 0.85rem 1.25rem;
   border-radius: var(--radius-pill);
   box-shadow: 0 12px 28px rgba(31, 157, 85, 0.36);
+  animation: floatingEnter 420ms var(--ease-out) 260ms both;
   transition:
     transform var(--dur-press) var(--ease-out),
     background-color var(--dur-ui) ease,
@@ -1185,12 +1244,45 @@ h4 {
 }
 
 /* =========================================================
-   Entrance Animation (Hero only, subtle)
+   Motion Layer — Emil Kowalski curves & scroll reveals
    ========================================================= */
 @keyframes heroRise {
   from {
     opacity: 0;
     transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes heroPortraitIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes floatingEnter {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes faqReveal {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
   }
   to {
     opacity: 1;
@@ -1214,11 +1306,49 @@ h4 {
 }
 
 .hero-enter-delay-1 {
-  animation-delay: 70ms;
+  animation-delay: 65ms;
 }
 
 .hero-enter-delay-2 {
-  animation-delay: 140ms;
+  animation-delay: 130ms;
+}
+
+.hero-portrait-enter {
+  animation: heroPortraitIn 560ms var(--ease-out) 90ms both;
+}
+
+/* Scroll-triggered reveals (marketing sections, non-blocking) */
+[data-reveal] {
+  opacity: 0;
+  transition:
+    opacity 460ms var(--ease-out),
+    transform 460ms var(--ease-out);
+}
+
+[data-reveal='up'] {
+  transform: translateY(16px);
+}
+
+[data-reveal='scale'] {
+  transform: scale(0.97) translateY(10px);
+}
+
+[data-reveal][data-visible='true'] {
+  opacity: 1;
+  transform: none;
+}
+
+/* Non-uniform stagger delays (40-120ms) */
+[data-stagger='1'] {
+  transition-delay: 50ms;
+}
+
+[data-stagger='2'] {
+  transition-delay: 90ms;
+}
+
+[data-stagger='3'] {
+  transition-delay: 120ms;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1227,8 +1357,20 @@ h4 {
   }
 
   .hero-enter,
+  .hero-portrait-enter,
+  .floating-whatsapp,
+  .faq-answer,
   .mobile-menu {
     animation-name: fadeOnly;
+    animation-delay: 0ms;
+  }
+
+  [data-reveal],
+  [data-reveal='up'],
+  [data-reveal='scale'] {
+    transform: none;
+    transition: opacity 240ms ease;
+    transition-delay: 0ms;
   }
 
   @keyframes fadeOnly {
