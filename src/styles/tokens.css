@@ -1,0 +1,53 @@
+:root {
+  /* Palette — Deep Royal Navy & Architectural Gold (inspired by reference) */
+  --navy-950: #061836;
+  --navy-900: #081f44;
+  --navy-800: #0b2a5b;
+  --navy-700: #123b7a;
+  --navy-100: #e8effa;
+
+  --gold-500: #e8a817;
+  --gold-400: #f5b82e;
+  --gold-600: #cc8f0a;
+  --gold-50: #fef8e7;
+
+  --whatsapp-500: #1f9d55;
+  --whatsapp-600: #187f44;
+
+  --surface-white: #ffffff;
+  --surface-soft: #f5f7fb;
+  --surface-border: #e2e8f0;
+
+  --ink-900: #0f1d35;
+  --ink-700: #33435c;
+  --ink-500: #596980;
+  --ink-on-dark: #ffffff;
+  --ink-on-dark-muted: #c9d7ec;
+
+  /* Typography */
+  --font-display: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* Spacing & Layout */
+  --container-max: 1180px;
+  --container-pad: clamp(1.25rem, 4vw, 2rem);
+  --section-py: clamp(4.25rem, 7vw, 6.25rem);
+
+  /* Radii */
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-pill: 999px;
+
+  /* Shadows */
+  --shadow-sm: 0 4px 16px rgba(8, 31, 68, 0.06);
+  --shadow-md: 0 14px 36px rgba(8, 31, 68, 0.1);
+  --shadow-lg: 0 24px 56px rgba(6, 24, 54, 0.18);
+
+  /* Motion — Emil Kowalski curves */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --dur-press: 150ms;
+  --dur-ui: 220ms;
+  --dur-enter: 520ms;
+}
