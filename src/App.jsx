@@ -3,6 +3,7 @@ import {
   ArrowRight,
   Building2,
   CheckCircle2,
+  ChevronDown,
   Clock,
   ExternalLink,
   Home,
@@ -24,6 +25,7 @@ const NAV_ITEMS = [
   { label: 'Sobre', href: '#sobre' },
   { label: 'Avaliações', href: '#avaliacoes' },
   { label: 'Região', href: '#regiao' },
+  { label: 'Dúvidas', href: '#perguntas' },
   { label: 'Contato', href: '#contato' },
 ];
 
@@ -92,16 +94,6 @@ export default function App() {
               </a>
             ))}
           </nav>
-
-          <a
-            href={whatsappGeral}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn btn-gold header-cta"
-          >
-            <MessageCircle size={17} aria-hidden="true" />
-            WhatsApp
-          </a>
 
           <button
             type="button"
@@ -250,11 +242,12 @@ export default function App() {
         <section id="servicos" className="section">
           <div className="container">
             <div className="section-header section-header-center">
-              <h2 className="section-title">Como posso ajudar você</h2>
+              <h2 className="section-title">Serviços de corretagem de imóveis em Goiânia</h2>
               <div className="section-divider" aria-hidden="true" />
               <p className="section-lead">
-                Atendimento direto e personalizado para quem busca comprar ou vender imóveis em
-                Goiânia com segurança.
+                Eduardo Vieira atua em Goiânia com foco na compra e venda de imóveis, busca
+                personalizada da melhor opção para cada perfil e acompanhamento completo do início
+                ao fim da negociação.
               </p>
             </div>
 
@@ -346,11 +339,11 @@ export default function App() {
         <section id="avaliacoes" className="section">
           <div className="container">
             <div className="section-header section-header-center">
-              <h2 className="section-title">Avaliações reais no Google</h2>
+              <h2 className="section-title">Avaliações de clientes em Goiânia no Google</h2>
               <div className="section-divider" aria-hidden="true" />
               <p className="section-lead">
-                O que os clientes destacam sobre o atendimento, a transparência e o suporte em cada
-                negociação.
+                Com nota 5,0 de 5 em 43 avaliações reais no Google Maps, Eduardo Vieira é
+                reconhecido pela transparência, honestidade, paciência e suporte em cada etapa.
               </p>
             </div>
 
@@ -457,9 +450,38 @@ export default function App() {
                   src={CORRETOR.googleMapsEmbedUrl}
                   className="map-iframe"
                   loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
+                  sandbox="allow-scripts allow-same-origin allow-popups"
+                  referrerPolicy="no-referrer"
                 />
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ (SEO + AI Search) */}
+        <section id="perguntas" className="section">
+          <div className="container">
+            <div className="section-header section-header-center">
+              <h2 className="section-title">
+                Perguntas frequentes sobre comprar ou vender imóvel em Goiânia
+              </h2>
+              <div className="section-divider" aria-hidden="true" />
+              <p className="section-lead">
+                Respostas diretas sobre a base de atendimento no Setor Marista, horários e como
+                funciona o acompanhamento com Eduardo Vieira.
+              </p>
+            </div>
+
+            <div className="faq-list">
+              {CORRETOR.faq.map((item) => (
+                <details key={item.pergunta} className="faq-item">
+                  <summary className="faq-question">
+                    <span>{item.pergunta}</span>
+                    <ChevronDown size={19} className="faq-chevron" aria-hidden="true" />
+                  </summary>
+                  <p className="faq-answer">{item.resposta}</p>
+                </details>
+              ))}
             </div>
           </div>
         </section>
@@ -510,9 +532,17 @@ export default function App() {
           <div className="footer-grid">
             <div>
               <a href="#topo" className="brand-link">
-                <span className="brand-mark" aria-hidden="true">
-                  <Building2 size={20} strokeWidth={2.2} />
-                </span>
+                {CORRETOR.logoUrl ? (
+                  <img
+                    src={CORRETOR.logoUrl}
+                    alt={CORRETOR.marca}
+                    className="brand-logo-img"
+                  />
+                ) : (
+                  <span className="brand-mark" aria-hidden="true">
+                    <Building2 size={20} strokeWidth={2.2} />
+                  </span>
+                )}
                 <span className="brand-text">
                   <span className="brand-name">{CORRETOR.nome}</span>
                   <span className="brand-role">{CORRETOR.profissao}</span>

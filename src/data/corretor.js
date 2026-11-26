@@ -12,8 +12,8 @@ export const CORRETOR = {
   cidade: 'Goiânia - GO',
   bairroBase: 'Setor Marista',
 
-  // LOGO (opcional: coloque o caminho da logo em /public/images/logo.png quando disponível)
-  logoUrl: '',
+  // LOGO (troque o caminho em /public/images/ quando desejar atualizar)
+  logoUrl: '/images/logo-ev.svg',
 
   // CONTATO
   telefone: '(62) 99828-4849',
@@ -132,6 +132,30 @@ export const CORRETOR = {
       texto:
         'Ótimo atendimento, bastante atencioso e educado, deu todo o suporte do início ao fim, recomendo bastante!!!',
       autor: 'Cliente Google',
+    },
+  ],
+
+  // PERGUNTAS FREQUENTES (apenas fatos confirmados)
+  faq: [
+    {
+      pergunta: 'Onde fica a base de atendimento do corretor Eduardo Vieira em Goiânia?',
+      resposta:
+        'A base de atendimento fica na R. 139, 349, Setor Marista, Goiânia - GO, CEP 74170-150, com atuação para compra e venda de imóveis em Goiânia.',
+    },
+    {
+      pergunta: 'Qual é o horário de atendimento de Eduardo Vieira?',
+      resposta:
+        'O atendimento acontece todos os dias da semana, das 8h às 19h, pelo WhatsApp (62) 99828-4849 ou telefone.',
+    },
+    {
+      pergunta: 'Como funciona o atendimento para comprar ou vender um imóvel?',
+      resposta:
+        'Eduardo realiza a busca personalizada da melhor opção para cada cliente e oferece suporte completo do início ao fim da negociação.',
+    },
+    {
+      pergunta: 'Qual é a avaliação de Eduardo Vieira no Google?',
+      resposta:
+        'Eduardo Vieira possui nota 5,0 de 5 com 43 avaliações no Google Maps, nas quais clientes destacam transparência, honestidade, paciência e dedicação.',
     },
   ],
 };
