@@ -1,2 +1,4 @@
 User-agent: *
 Allow: /
+
+Sitemap: https://eduardo-vieira-imoveis.vercel.app/sitemap.xml
