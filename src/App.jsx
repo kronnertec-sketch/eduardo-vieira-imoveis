@@ -1,20 +1,15 @@
 import { useEffect, useState } from 'react';
 import {
   ArrowRight,
-  Building2,
-  CheckCircle2,
   ChevronDown,
   Clock,
   ExternalLink,
-  Home,
   Instagram,
   Mail,
   MapPin,
   Menu,
   MessageCircle,
   Phone,
-  Search,
-  ShieldCheck,
   Star,
   X,
 } from 'lucide-react';
@@ -29,13 +24,9 @@ const NAV_ITEMS = [
   { label: 'Contato', href: '#contato' },
 ];
 
-function ServiceIcon({ name }) {
-  if (name === 'search') return <Search size={20} strokeWidth={2.2} aria-hidden="true" />;
-  if (name === 'shield') return <ShieldCheck size={20} strokeWidth={2.2} aria-hidden="true" />;
-  return <Home size={20} strokeWidth={2.2} aria-hidden="true" />;
-}
+const COOKIE_STORAGE_KEY = 'ev_imoveis_cookie_notice_v1';
 
-function FiveStars({ size = 16 }) {
+function FiveStars({ size = 15 }) {
   return (
     <span className="stars-row" aria-label="5 de 5 estrelas">
       {[0, 1, 2, 3, 4].map((index) => (
@@ -50,8 +41,6 @@ function FiveStars({ size = 16 }) {
     </span>
   );
 }
-
-const COOKIE_STORAGE_KEY = 'ev_imoveis_cookie_notice_v1';
 
 export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -127,13 +116,7 @@ export default function App() {
       <header className={`site-header${scrolled ? ' is-scrolled' : ''}`}>
         <div className="container header-inner">
           <a href="#topo" className="brand-link" aria-label={CORRETOR.marca}>
-            {CORRETOR.logoUrl ? (
-              <img src={CORRETOR.logoUrl} alt={CORRETOR.marca} className="brand-logo-img" />
-            ) : (
-              <span className="brand-mark" aria-hidden="true">
-                <Building2 size={20} strokeWidth={2.2} />
-              </span>
-            )}
+            <img src={CORRETOR.logoUrl} alt={CORRETOR.marca} className="brand-logo-img" />
             <span className="brand-text">
               <span className="brand-name">{CORRETOR.nome}</span>
               <span className="brand-role">{CORRETOR.profissao}</span>
@@ -155,7 +138,7 @@ export default function App() {
             aria-expanded={menuOpen}
             onClick={() => setMenuOpen((prev) => !prev)}
           >
-            {menuOpen ? <X size={22} aria-hidden="true" /> : <Menu size={22} aria-hidden="true" />}
+            {menuOpen ? <X size={20} aria-hidden="true" /> : <Menu size={20} aria-hidden="true" />}
           </button>
         </div>
       </header>
@@ -176,56 +159,54 @@ export default function App() {
             href={whatsappGeral}
             target="_blank"
             rel="noopener noreferrer"
-            className="btn btn-gold mobile-menu-cta"
+            className="btn btn-dark mobile-menu-cta"
             onClick={() => setMenuOpen(false)}
           >
-            <MessageCircle size={18} aria-hidden="true" />
+            <MessageCircle size={17} aria-hidden="true" />
             Falar no WhatsApp
           </a>
         </nav>
       )}
 
       <main id="conteudo-principal">
-        {/* Hero */}
+        {/* Editorial Hero on Warm Limestone */}
         <section id="topo" className="hero">
-          <div className="hero-bg" aria-hidden="true">
-            <img src={CORRETOR.imagens.heroFundo} alt="" className="hero-bg-img" />
-            <div className="hero-bg-scrim" />
-          </div>
-
           <div className="container hero-grid">
             <div className="hero-copy">
-              <div className="hero-meta-row hero-enter">
-                <span className="hero-pill hero-pill-gold tabular">
-                  <Star size={14} fill="currentColor" aria-hidden="true" />
-                  {CORRETOR.google.nota} no Google ({CORRETOR.google.totalAvaliacoes} avaliações)
-                </span>
-                <span className="hero-pill">CRECI: {CORRETOR.creci}</span>
-              </div>
-
-              <h1 className="hero-title hero-enter hero-enter-delay-1">
-                {CORRETOR.nome},{' '}
-                <span className="hero-title-accent">Corretor de Imóveis</span> em Goiânia
+              <h1 className="hero-title hero-enter">
+                {CORRETOR.nome}, <em>corretor de imóveis</em> em Goiânia
               </h1>
 
-              <p className="hero-subtitle hero-enter hero-enter-delay-2">
+              <p className="hero-subtitle hero-enter hero-enter-delay-1">
                 Compra e venda de imóveis com busca personalizada, transparência e suporte do início
                 ao fim da negociação. Base no {CORRETOR.bairroBase}.
               </p>
+
+              <div className="hero-credentials hero-enter hero-enter-delay-1">
+                <span className="hero-cred-item tabular">
+                  <Star size={15} fill="currentColor" className="hero-cred-star" aria-hidden="true" />
+                  {CORRETOR.google.nota} no Google ({CORRETOR.google.totalAvaliacoes} avaliações)
+                </span>
+                <span className="hero-cred-sep" aria-hidden="true">
+                  /
+                </span>
+                <span className="hero-cred-item">CRECI: {CORRETOR.creci}</span>
+              </div>
 
               <div className="hero-actions hero-enter hero-enter-delay-2">
                 <a
                   href={whatsappGeral}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn btn-gold"
+                  className="btn btn-dark"
                 >
-                  <MessageCircle size={18} aria-hidden="true" />
+                  <MessageCircle size={17} aria-hidden="true" />
                   Falar no WhatsApp
-                  <ArrowRight size={17} aria-hidden="true" />
+                  <ArrowRight size={16} aria-hidden="true" />
                 </a>
-                <a href="#avaliacoes" className="btn btn-outline-light">
-                  Ver avaliações
+                <a href="#avaliacoes" className="text-action">
+                  Ler avaliações reais
+                  <ArrowRight size={15} aria-hidden="true" />
                 </a>
               </div>
             </div>
@@ -233,7 +214,7 @@ export default function App() {
             <div className="hero-portrait-wrap hero-portrait-enter">
               <div className="hero-portrait-frame">
                 <img
-                  src={CORRETOR.imagens.heroRetrato}
+                  src={CORRETOR.imagens.sobreRetrato}
                   alt="Eduardo Vieira, corretor de imóveis em Goiânia"
                   className="hero-portrait-img"
                 />
@@ -242,61 +223,37 @@ export default function App() {
           </div>
         </section>
 
-        {/* Floating Trust Strip */}
-        <section className="trust-strip-section" aria-label="Destaques do atendimento">
+        {/* Architectural Facts Band */}
+        <section className="facts-band" aria-label="Destaques do atendimento">
           <div className="container">
-            <div className="trust-strip" data-reveal="up">
-              <div className="trust-item">
-                <span className="trust-icon trust-icon-gold" aria-hidden="true">
-                  <Star size={20} fill="currentColor" />
-                </span>
-                <div>
-                  <p className="trust-value tabular">Nota {CORRETOR.google.nota} no Google</p>
-                  <p className="trust-label tabular">
-                    {CORRETOR.google.totalAvaliacoes} avaliações no Google Maps
-                  </p>
-                </div>
+            <div className="facts-grid" data-reveal="up">
+              <div className="fact-cell">
+                <p className="fact-value tabular">{CORRETOR.google.nota} no Google</p>
+                <p className="fact-label tabular">
+                  {CORRETOR.google.totalAvaliacoes} avaliações no Google Maps
+                </p>
               </div>
-
-              <div className="trust-item">
-                <span className="trust-icon" aria-hidden="true">
-                  <MapPin size={20} />
-                </span>
-                <div>
-                  <p className="trust-value">{CORRETOR.bairroBase}</p>
-                  <p className="trust-label">Atuação em {CORRETOR.cidade}</p>
-                </div>
+              <div className="fact-cell">
+                <p className="fact-value">{CORRETOR.bairroBase}</p>
+                <p className="fact-label">Base de atuação em {CORRETOR.cidade}</p>
               </div>
-
-              <div className="trust-item">
-                <span className="trust-icon" aria-hidden="true">
-                  <Clock size={20} />
-                </span>
-                <div>
-                  <p className="trust-value">Todos os dias</p>
-                  <p className="trust-label">Atendimento das 8h às 19h</p>
-                </div>
+              <div className="fact-cell">
+                <p className="fact-value">Todos os dias</p>
+                <p className="fact-label">Atendimento das 8h às 19h</p>
               </div>
-
-              <div className="trust-item">
-                <span className="trust-icon" aria-hidden="true">
-                  <ShieldCheck size={20} />
-                </span>
-                <div>
-                  <p className="trust-value">Suporte completo</p>
-                  <p className="trust-label">Do início ao fim da negociação</p>
-                </div>
+              <div className="fact-cell">
+                <p className="fact-value">Início ao fim</p>
+                <p className="fact-label">Suporte completo na negociação</p>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Services */}
-        <section id="servicos" className="section">
+        {/* Services — Editorial Architectural Grid */}
+        <section id="servicos" className="section section-paper">
           <div className="container">
-            <div className="section-header section-header-center" data-reveal="up">
+            <div className="section-head-split" data-reveal="up">
               <h2 className="section-title">Serviços de corretagem de imóveis em Goiânia</h2>
-              <div className="section-divider" aria-hidden="true" />
               <p className="section-lead">
                 Eduardo Vieira atua em Goiânia com foco na compra e venda de imóveis, busca
                 personalizada da melhor opção para cada perfil e acompanhamento completo do início
@@ -308,7 +265,7 @@ export default function App() {
               {CORRETOR.servicos.map((servico, index) => (
                 <article
                   key={servico.id}
-                  className="service-card"
+                  className="service-item"
                   data-reveal="up"
                   data-stagger={index}
                 >
@@ -321,19 +278,16 @@ export default function App() {
                     />
                   </div>
                   <div className="service-body">
-                    <span className="service-badge">
-                      <ServiceIcon name={servico.icone} />
-                    </span>
                     <h3 className="service-title">{servico.titulo}</h3>
                     <p className="service-desc">{servico.descricao}</p>
                     <a
                       href={montarLinkWhatsApp(servico.whatsappTexto)}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="service-link"
+                      className="text-action"
                     >
                       Conversar no WhatsApp
-                      <ArrowRight size={16} aria-hidden="true" />
+                      <ArrowRight size={15} aria-hidden="true" />
                     </a>
                   </div>
                 </article>
@@ -342,13 +296,13 @@ export default function App() {
           </div>
         </section>
 
-        {/* About */}
-        <section id="sobre" className="section section-soft">
+        {/* About — Deep Obsidian Contrast Band */}
+        <section id="sobre" className="section section-obsidian">
           <div className="container about-grid">
             <div className="about-media" data-reveal="scale">
               <div className="about-img-frame">
                 <img
-                  src={CORRETOR.imagens.sobreRetrato}
+                  src={CORRETOR.imagens.heroRetrato}
                   alt="Eduardo Vieira em atendimento imobiliário"
                   className="about-img"
                   loading="lazy"
@@ -357,10 +311,7 @@ export default function App() {
             </div>
 
             <div className="about-content" data-reveal="up">
-              <div>
-                <h2 className="section-title">{CORRETOR.sobre.titulo}</h2>
-                <div className="section-divider" aria-hidden="true" />
-              </div>
+              <h2 className="section-title">{CORRETOR.sobre.titulo}</h2>
 
               {CORRETOR.sobre.paragrafos.map((paragrafo, index) => (
                 <p key={index} className="about-text">
@@ -376,11 +327,8 @@ export default function App() {
                     data-reveal="up"
                     data-stagger={index}
                   >
-                    <CheckCircle2 size={20} className="differential-icon" aria-hidden="true" />
-                    <div>
-                      <p className="differential-title">{item.titulo}</p>
-                      <p className="differential-desc">{item.descricao}</p>
-                    </div>
+                    <p className="differential-title">{item.titulo}</p>
+                    <p className="differential-desc">{item.descricao}</p>
                   </li>
                 ))}
               </ul>
@@ -389,65 +337,61 @@ export default function App() {
                 href={whatsappGeral}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn btn-navy"
+                className="btn btn-bronze"
               >
-                <MessageCircle size={18} aria-hidden="true" />
+                <MessageCircle size={17} aria-hidden="true" />
                 Falar com Eduardo Vieira
+                <ArrowRight size={16} aria-hidden="true" />
               </a>
             </div>
           </div>
         </section>
 
-        {/* Testimonials */}
+        {/* Google Reviews — Hairline Editorial Quote Grid */}
         <section id="avaliacoes" className="section">
           <div className="container">
-            <div className="section-header section-header-center" data-reveal="up">
-              <h2 className="section-title">Avaliações de clientes em Goiânia no Google</h2>
-              <div className="section-divider" aria-hidden="true" />
-              <p className="section-lead">
-                Com nota 5,0 de 5 em 43 avaliações reais no Google Maps, Eduardo Vieira é
-                reconhecido pela transparência, honestidade, paciência e suporte em cada etapa.
-              </p>
-            </div>
-
-            <div className="reviews-summary" data-reveal="up">
-              <div className="reviews-score-block">
-                <span className="reviews-score tabular">{CORRETOR.google.nota}</span>
-                <div>
-                  <FiveStars size={18} />
-                  <p className="reviews-count tabular">
-                    Nota máxima baseada em {CORRETOR.google.totalAvaliacoes} avaliações no Google
-                    Maps
-                  </p>
-                </div>
+            <div className="reviews-header-bar" data-reveal="up">
+              <div>
+                <h2 className="section-title">Avaliações de clientes em Goiânia no Google</h2>
+                <p className="section-lead" style={{ marginTop: '0.85rem' }}>
+                  Transparência, honestidade, paciência e suporte do início ao fim destacados por
+                  quem já negociou com Eduardo Vieira.
+                </p>
               </div>
 
-              <a
-                href={CORRETOR.googleMapsUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn-outline-light"
-              >
-                Ver no Google Maps
-                <ExternalLink size={16} aria-hidden="true" />
-              </a>
+              <div className="reviews-rating-summary">
+                <span className="reviews-big-score tabular">{CORRETOR.google.nota}</span>
+                <div>
+                  <FiveStars size={16} />
+                  <p className="reviews-count-text tabular">
+                    {CORRETOR.google.totalAvaliacoes} avaliações no Google Maps
+                  </p>
+                  <a
+                    href={CORRETOR.googleMapsUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-action"
+                    style={{ marginTop: '0.45rem', fontSize: '0.82rem' }}
+                  >
+                    Ver no Google Maps
+                    <ExternalLink size={13} aria-hidden="true" />
+                  </a>
+                </div>
+              </div>
             </div>
 
             <div className="reviews-grid">
               {CORRETOR.depoimentos.map((depoimento, index) => (
                 <article
                   key={depoimento.id}
-                  className="review-card"
+                  className="review-item"
                   data-reveal="up"
                   data-stagger={index}
                 >
                   <p className="review-quote">“{depoimento.texto}”</p>
-                  <div className="review-footer">
-                    <div>
-                      <p className="review-author">{depoimento.autor}</p>
-                      <p className="review-source">Avaliação verificada no Google</p>
-                    </div>
-                    <FiveStars size={15} />
+                  <div className="review-meta">
+                    <span className="review-author">{depoimento.autor}</span>
+                    <FiveStars size={14} />
                   </div>
                 </article>
               ))}
@@ -456,24 +400,21 @@ export default function App() {
         </section>
 
         {/* Region of Operation */}
-        <section id="regiao" className="section section-soft">
+        <section id="regiao" className="section section-sand">
           <div className="container">
-            <div className="section-header" data-reveal="up">
+            <div className="section-head-split" data-reveal="up">
               <h2 className="section-title">Atuação em Goiânia, com base no Setor Marista</h2>
-              <div className="section-divider" aria-hidden="true" />
               <p className="section-lead">
-                Atendimento presencial e online para toda Goiânia, com ponto de apoio no Setor
-                Marista.
+                Atendimento presencial e online em toda Goiânia, com ponto de apoio localizado no
+                Setor Marista.
               </p>
             </div>
 
             <div className="region-grid">
-              <div className="region-card" data-reveal="up">
+              <div className="region-info" data-reveal="up">
                 <div className="region-details">
                   <div className="region-detail-row">
-                    <span className="region-icon" aria-hidden="true">
-                      <MapPin size={19} />
-                    </span>
+                    <MapPin size={18} className="region-icon" aria-hidden="true" />
                     <div>
                       <p className="region-detail-label">Endereço</p>
                       <p className="region-detail-value">{CORRETOR.endereco}</p>
@@ -481,9 +422,7 @@ export default function App() {
                   </div>
 
                   <div className="region-detail-row">
-                    <span className="region-icon" aria-hidden="true">
-                      <Clock size={19} />
-                    </span>
+                    <Clock size={18} className="region-icon" aria-hidden="true" />
                     <div>
                       <p className="region-detail-label">Horário de atendimento</p>
                       <p className="region-detail-value">{CORRETOR.horario}</p>
@@ -491,9 +430,7 @@ export default function App() {
                   </div>
 
                   <div className="region-detail-row">
-                    <span className="region-icon" aria-hidden="true">
-                      <Phone size={19} />
-                    </span>
+                    <Phone size={18} className="region-icon" aria-hidden="true" />
                     <div>
                       <p className="region-detail-label">Telefone e WhatsApp</p>
                       <p className="region-detail-value tabular">{CORRETOR.telefone}</p>
@@ -501,15 +438,17 @@ export default function App() {
                   </div>
                 </div>
 
-                <a
-                  href={CORRETOR.googleMapsUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn btn-outline-dark"
-                >
-                  Abrir endereço no Google Maps
-                  <ExternalLink size={16} aria-hidden="true" />
-                </a>
+                <div>
+                  <a
+                    href={CORRETOR.googleMapsUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn-outline-dark"
+                  >
+                    Abrir endereço no Google Maps
+                    <ExternalLink size={15} aria-hidden="true" />
+                  </a>
+                </div>
               </div>
 
               <div className="map-frame" data-reveal="scale">
@@ -526,17 +465,16 @@ export default function App() {
           </div>
         </section>
 
-        {/* FAQ (SEO + AI Search) */}
-        <section id="perguntas" className="section">
-          <div className="container">
-            <div className="section-header section-header-center" data-reveal="up">
+        {/* FAQ — Editorial Split */}
+        <section id="perguntas" className="section section-paper">
+          <div className="container faq-layout">
+            <div data-reveal="up">
               <h2 className="section-title">
                 Perguntas frequentes sobre comprar ou vender imóvel em Goiânia
               </h2>
-              <div className="section-divider" aria-hidden="true" />
-              <p className="section-lead">
-                Respostas diretas sobre a base de atendimento no Setor Marista, horários e como
-                funciona o acompanhamento com Eduardo Vieira.
+              <p className="section-lead" style={{ marginTop: '1rem' }}>
+                Respostas diretas sobre a base no Setor Marista, horários e como funciona o
+                atendimento com Eduardo Vieira.
               </p>
             </div>
 
@@ -559,41 +497,36 @@ export default function App() {
           </div>
         </section>
 
-        {/* Signature CTA Banner */}
-        <section className="cta-banner-section" aria-label="Chamada para contato">
-          <div className="container">
-            <div className="cta-banner" data-reveal="scale">
-              <div className="cta-banner-content">
-                <span className="cta-banner-icon" aria-hidden="true">
-                  <Phone size={22} />
-                </span>
-                <h2 className="cta-banner-title">
-                  Vamos encontrar o <span>imóvel certo</span> para você?
-                </h2>
-                <p className="cta-banner-text">
-                  Envie uma mensagem pelo WhatsApp. Atendimento direto com Eduardo Vieira, todos os
-                  dias das 8h às 19h.
-                </p>
-                <a
-                  href={whatsappGeral}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn btn-gold"
-                >
-                  <MessageCircle size={18} aria-hidden="true" />
-                  Chamar no WhatsApp
-                  <ArrowRight size={17} aria-hidden="true" />
-                </a>
-              </div>
+        {/* Closing Architectural CTA */}
+        <section className="closing-cta" aria-label="Chamada para contato">
+          <div className="closing-grid">
+            <div className="closing-content" data-reveal="up">
+              <h2 className="closing-title">
+                Vamos encontrar o <em>imóvel certo</em> para você?
+              </h2>
+              <p className="closing-text">
+                Envie uma mensagem pelo WhatsApp. Atendimento direto com Eduardo Vieira, todos os
+                dias das 8h às 19h.
+              </p>
+              <a
+                href={whatsappGeral}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-bronze"
+              >
+                <MessageCircle size={17} aria-hidden="true" />
+                Chamar no WhatsApp
+                <ArrowRight size={16} aria-hidden="true" />
+              </a>
+            </div>
 
-              <div className="cta-banner-media">
-                <img
-                  src={CORRETOR.imagens.ctaFundo}
-                  alt="Residência moderna de alto padrão"
-                  className="cta-banner-img"
-                  loading="lazy"
-                />
-              </div>
+            <div className="closing-media">
+              <img
+                src={CORRETOR.imagens.ctaFundo}
+                alt="Residência contemporânea de alto padrão"
+                className="closing-img"
+                loading="lazy"
+              />
             </div>
           </div>
         </section>
@@ -605,17 +538,7 @@ export default function App() {
           <div className="footer-grid">
             <div>
               <a href="#topo" className="brand-link">
-                {CORRETOR.logoUrl ? (
-                  <img
-                    src={CORRETOR.logoUrl}
-                    alt={CORRETOR.marca}
-                    className="brand-logo-img"
-                  />
-                ) : (
-                  <span className="brand-mark" aria-hidden="true">
-                    <Building2 size={20} strokeWidth={2.2} />
-                  </span>
-                )}
+                <img src={CORRETOR.logoUrl} alt={CORRETOR.marca} className="brand-logo-img" />
                 <span className="brand-text">
                   <span className="brand-name">{CORRETOR.nome}</span>
                   <span className="brand-role">{CORRETOR.profissao}</span>
@@ -638,13 +561,13 @@ export default function App() {
                     rel="noopener noreferrer"
                     className="footer-contact-link tabular"
                   >
-                    <MessageCircle size={17} aria-hidden="true" />
+                    <MessageCircle size={16} aria-hidden="true" />
                     WhatsApp: {CORRETOR.telefone}
                   </a>
                 </li>
                 <li>
                   <a href={CORRETOR.telefoneHref} className="footer-contact-link tabular">
-                    <Phone size={17} aria-hidden="true" />
+                    <Phone size={16} aria-hidden="true" />
                     Telefone: {CORRETOR.telefone}
                   </a>
                 </li>
@@ -655,19 +578,19 @@ export default function App() {
                     rel="noopener noreferrer"
                     className="footer-contact-link"
                   >
-                    <Instagram size={17} aria-hidden="true" />
+                    <Instagram size={16} aria-hidden="true" />
                     Instagram: {CORRETOR.instagramHandle}
                   </a>
                 </li>
                 <li>
                   {CORRETOR.email && CORRETOR.email !== 'a confirmar' ? (
                     <a href={`mailto:${CORRETOR.email}`} className="footer-contact-link">
-                      <Mail size={17} aria-hidden="true" />
+                      <Mail size={16} aria-hidden="true" />
                       {CORRETOR.email}
                     </a>
                   ) : (
                     <span className="footer-contact-link">
-                      <Mail size={17} aria-hidden="true" />
+                      <Mail size={16} aria-hidden="true" />
                       E-mail: {CORRETOR.email}
                     </span>
                   )}
@@ -679,11 +602,11 @@ export default function App() {
               <h3 className="footer-heading">Localização e horário</h3>
               <ul className="footer-list">
                 <li className="footer-contact-link">
-                  <MapPin size={17} aria-hidden="true" style={{ flexShrink: 0 }} />
+                  <MapPin size={16} aria-hidden="true" style={{ flexShrink: 0 }} />
                   <span>{CORRETOR.endereco}</span>
                 </li>
                 <li className="footer-contact-link">
-                  <Clock size={17} aria-hidden="true" style={{ flexShrink: 0 }} />
+                  <Clock size={16} aria-hidden="true" style={{ flexShrink: 0 }} />
                   <span>{CORRETOR.horario}</span>
                 </li>
               </ul>
@@ -722,7 +645,11 @@ export default function App() {
             .
           </p>
           <div className="cookie-banner-actions">
-            <button type="button" className="btn btn-gold cookie-accept-btn" onClick={acceptCookies}>
+            <button
+              type="button"
+              className="btn btn-bronze cookie-accept-btn"
+              onClick={acceptCookies}
+            >
               Entendi
             </button>
           </div>
@@ -793,7 +720,7 @@ export default function App() {
             <div className="modal-footer">
               <button
                 type="button"
-                className="btn btn-navy"
+                className="btn btn-dark"
                 onClick={() => {
                   acceptCookies();
                   setPrivacyOpen(false);
@@ -814,7 +741,7 @@ export default function App() {
         className="floating-whatsapp"
         aria-label="Conversar com Eduardo Vieira pelo WhatsApp"
       >
-        <MessageCircle size={20} aria-hidden="true" />
+        <MessageCircle size={19} aria-hidden="true" />
         <span>WhatsApp</span>
       </a>
     </>
